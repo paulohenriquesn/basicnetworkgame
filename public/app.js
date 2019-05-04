@@ -1,4 +1,4 @@
-var socket = io.connect("localhost:80");
+var socket = io.connect("http://paulohenriquesn.com:80");
 
 var player_props = {
   x: 0,
@@ -94,6 +94,18 @@ function keyReleased()
   UpdateMove();
 }
 
+
+var updateaa = false;
+
+function atualizar(data)
+{
+  if(updateaa == false){
+    socket.emit("game",data);
+    setTimeout(()=>{updateaa=false;},100);
+    updateaa = true;
+  }
+}
+
 class Jitter {
   constructor() {
     this.x = 50;
@@ -109,6 +121,8 @@ class Jitter {
 
   display() {
     var data = [this.x,this.y, 50, 50];
-    socket.emit("game",data);
+    atualizar(data);
+      //socket.emit("game",data);
+
   }
 }
